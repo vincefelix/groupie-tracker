@@ -85,52 +85,54 @@ func get_link(w http.ResponseWriter, r *http.Request) (string, string, string, s
 	return artist_link, dates_link, location_link, relation_link
 }
 
-// api_artists fetch and displays datas related to "/artists" collected from the groupie json file
-func api_artists(w http.ResponseWriter, r *http.Request) {
-	file, err := template.ParseFiles("templates/artist.html")
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-	} else {
-		file.Execute(w, r)
-	}
+// api_artists fetches datas related to "/artists" collected from the groupie json file
+func api_artists(w http.ResponseWriter, r *http.Request) []Artists {
 
-	//getting the link heading to datas
+	// Getting the link heading to datas
 	link_artist, _, _, _ := get_link(w, r)
 
-	//fetching datas
+	// Fetching datas
 	data, err := http.Get(link_artist)
 	if err != nil {
 		http.Error(w, "error while fetching datas", http.StatusInternalServerError)
-	} else {
-		//reading the collected datas
-		content, ex := io.ReadAll(data.Body)
-		if ex != nil {
-			http.Error(w, "error while reading the content", http.StatusInternalServerError)
-		} else {
-
-			//converting the json file and storing the datas
-			var artist []Artists
-			err = json.Unmarshal(content, &artist)
-			if err != nil {
-				http.Error(w, "error while converting json", http.StatusInternalServerError)
-			} else {
-				for _, v := range artist {
-					fmt.Fprintf(w, "The name:%v\ncreation date:%v\nFirst album:%v\nmembers:%v\n\n\n\n", v.Name, v.Creation_date, v.First_album, v.Member)
-				}
-			}
-		}
+		return nil
 	}
 
+	// Reading the collected datas
+	content, err := io.ReadAll(data.Body)
+	if err != nil {
+		http.Error(w, "error while reading the content", http.StatusInternalServerError)
+		return nil
+	}
+
+	// Converting the JSON file and storing the datas
+	var artist []Artists
+	err = json.Unmarshal(content, &artist)
+	if err != nil {
+		http.Error(w, "error while converting json", http.StatusInternalServerError)
+		return nil
+	}
+
+	return artist
+}
+
+func artists(w http.ResponseWriter, r *http.Request) {
+	file, err := template.ParseFiles("templates/artist.html")
+	if err != nil {
+		http.Error(w, "500: internal servor error", http.StatusInternalServerError)
+		return
+	}
+	res := api_artists(w, r)
+	file.Execute(w, res)
 }
 
 // api_dates fetch and displays datas related to "/dates" collected from the groupie json file
 func api_dates(w http.ResponseWriter, r *http.Request) {
-	// file, err := template.ParseFiles("templates/dates.html")
-	// if err != nil {
-	// 	http.Error(w, "500: internal servor error", http.StatusInternalServerError)
-	// } else {
-	// 	file.Execute(w, r)
-	// }
+	file, err := template.ParseFiles("templates/dates.html")
+	if err != nil {
+		http.Error(w, "500: internal servor error", http.StatusInternalServerError)
+		return
+	}
 
 	//getting the link heading to datas
 	_, link_date, _, _ := get_link(w, r)
@@ -139,36 +141,38 @@ func api_dates(w http.ResponseWriter, r *http.Request) {
 	data, err := http.Get(link_date)
 	if err != nil {
 		http.Error(w, "error while fetching data", http.StatusInternalServerError)
-	} else {
+		return
+	}
 
-		//reading the collected datas
-		content, ex := io.ReadAll(data.Body)
-		if ex != nil {
-			http.Error(w, "error while reading the content", http.StatusInternalServerError)
-		} else {
+	//reading the collected datas
+	content, ex := io.ReadAll(data.Body)
+	if ex != nil {
+		http.Error(w, "error while reading the content", http.StatusInternalServerError)
+		return
+	}
 
-			//converting the json file and storing the datas
-			var thedate date
-			err = json.Unmarshal(content, &thedate)
-			if err != nil {
-				http.Error(w, "error while converting json", http.StatusInternalServerError)
-			} else {
-				for _, v := range thedate.Index {
-					fmt.Fprintf(w, "The dates are:%v\n\n\n\n", v.Date)
-				}
-			}
-		}
+	//converting the json file and storing the datas
+	var thedate date
+	err = json.Unmarshal(content, &thedate)
+	if err != nil {
+		http.Error(w, "error while converting json", http.StatusInternalServerError)
+		return
+	}
+
+	err = file.Execute(w, thedate)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
 	}
 }
 
 // api_locations fetch and displays datas related to "/locations" collected from the groupie json file
 func api_locations(w http.ResponseWriter, r *http.Request) {
-	// file, err := template.ParseFiles("templates/locations.html")
-	// if err != nil {
-	// 	http.Error(w, err.Error(), http.StatusInternalServerError)
-	// } else {
-	// 	file.Execute(w, r)
-	// }
+	file, err := template.ParseFiles("templates/locations.html")
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
 
 	//getting the link heading to datas
 	_, _, link_location, _ := get_link(w, r)
@@ -177,25 +181,27 @@ func api_locations(w http.ResponseWriter, r *http.Request) {
 	data, err := http.Get(link_location)
 	if err != nil {
 		http.Error(w, "error while fetching data", http.StatusInternalServerError)
-	} else {
+		return
+	}
 
-		//reading the collected datas
-		content, ex := io.ReadAll(data.Body)
-		if ex != nil {
-			http.Error(w, "error while reading the content", http.StatusInternalServerError)
-		} else {
+	//reading the collected datas
+	content, ex := io.ReadAll(data.Body)
+	if ex != nil {
+		http.Error(w, "error while reading the content", http.StatusInternalServerError)
+		return
+	}
 
-			//converting the json file and storing the datas
-			var zone locations
-			err = json.Unmarshal(content, &zone)
-			if err != nil {
-				http.Error(w, "error while converting json", http.StatusInternalServerError)
-			} else {
-				for _, v := range zone.Index {
-					fmt.Fprintf(w, "The locations are:%v\n\n\n\n", v.Location)
-				}
-			}
-		}
+	//converting the json file and storing the datas
+	var zone locations
+	err = json.Unmarshal(content, &zone)
+	if err != nil {
+		http.Error(w, "error while converting json", http.StatusInternalServerError)
+		return
+	}
+	err = file.Execute(w, zone)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
 	}
 }
 
@@ -250,7 +256,17 @@ func home(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	file.Execute(w, r)
+
+	tab := api_artists(w, r)
+	one := tab[0:5]
+	two := tab[5:9]
+	file.Execute(w, struct {
+		Top_artist []Artists
+		Top_album  []Artists
+	}{
+		Top_artist: one,
+		Top_album:  two,
+	})
 
 }
 
@@ -258,7 +274,7 @@ func home(w http.ResponseWriter, r *http.Request) {
 // handlers launches it too.
 func handlers() {
 	http.HandleFunc("/", home)
-	http.HandleFunc("/artists", api_artists)
+	http.HandleFunc("/artists", artists)
 	http.HandleFunc("/locations", api_locations)
 	http.HandleFunc("/dates", api_dates)
 	http.HandleFunc("/relations", api_relation)

@@ -7,17 +7,12 @@
 </head>
 <body>
     <h1>LOCATIONS</h1>
-    <ol>
-        <li>L</li>
-        <li>O</li>
-        <li>C</li>
-        <li>A</li>
-        <li>T</li>
-        <li>I</li>
-        <li>O</li>
-        <li>N</li>
-        <li>S</li>
-    </ol>
+    <ul>
+        {{range .}}
+        <img src="{{.Image}}" alt="Artist Image" width="200"><br>
+        <strong>ID:</strong> {.id}<br>
+        <strong>Location:</strong> {{.Locations}}, {{end}}<br>
+    </ul>
     <hr>
 </body>
 </html>

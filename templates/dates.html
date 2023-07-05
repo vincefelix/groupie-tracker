@@ -8,11 +8,10 @@
 <body>
     <h1>DATES</h1>
     <ol>
-        <li>D</li>
-        <li>A</li>
-        <li>T</li>
-        <li>E</li>
-        <li>S</li>
+        {{range .Index}}
+        <li>{{.Date}}</li>
+        <br>
+        {{end}}
     </ol>
     <hr>
 </body>

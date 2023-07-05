@@ -7,12 +7,24 @@
 </head>
 <body>
     <h1>HELLO THERE THIS HOME</h1>
+    <h3>TOP ARTISTS</h3>
     <ol>
-        <li>h</li>
-        <li>o</li>
-        <li>m</li>
-        <li>e</li>
+        {{range .Top_artist}}
+        <li>
+            <img src="{{.Image}}" alt="art">
+            <p>{{.Name}}</p>
+        </li>
+        {{end}}
     </ol>
     <hr>
+    <hr>
+    <h3>TOP ALBUM</h3>
+    {{range .Top_album}}
+    <div>
+        <img src="{{.Image}}" alt="art">
+        <p>{{.First_album}}</p>
+    </div>
+    {{end}}
+    </body>
 </body>
 </html>
