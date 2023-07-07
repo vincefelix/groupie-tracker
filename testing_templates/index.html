@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/home.css">
+    <title>groupie</title>
+</head>
+<body>
+    <header>
+    <h1>GROUPIE TRACKER</h1>
+    <h3>TOP ARTISTS</h3>
+</header>
+<main>
+        {{range .Top_artist}}
+        <div class="card">
+           <a href="http://localhost:8080/info/{{.Id}}"> <img src="{{.Image}}" alt="art"></a>
+            <p>{{.Name}}</p>
+        </div>
+        {{end}}
+    </main>
+    <hr>
+    <hr>
+  <a href="http://localhost:8080/artists"><button>see more ...</button></a>
+</body>
+</html>

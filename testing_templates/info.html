@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>groupie</title>
+</head>
+<body>
+    <nav><a href="http://localhost:8080">home</a></nav>
+    <hr>
+    <hr>
+<div><img src="{{.The_arts.Image}}" alt="zrt"></div>
+     <h1>Id: <i>{{.The_arts.Id}}</i></h1>
+    <h1>Name: {{.The_arts.Name}}</h1>
+    <h1><strong>Members:</strong></h1>
+    <ol>
+        {{range .The_arts.Member}}
+        <li>{{.}}</li>
+        {{end}}
+    </ol>
+    <h1><strong>Creation date: {{.The_arts.Creation_date}}</strong></h1>
+    <h1><strong>First album: {{.The_arts.First_album}}</strong></h1>
+    <h1><strong>Location:</strong></h1>
+    <ul>
+        {{range .Cities.Location}}
+        <li>{{.}}</li>
+        {{end}}
+    </ul>
+    <h1><strong>dates:</strong></h1>
+    <ol>
+        {{range .Days.Date}}
+        <li>{{.}}</li>
+        {{end}}
+    </ol>
+
+    <h1><strong>Relations:</strong></h1>
+    <table>
+<th>
+    <tr>
+<td>locations</td>
+<td>dates</td>
+</tr>
+</th>
+<tr>
+    <td> date</td>
+    <td> location</td>
+</tr>
+    </table>
+</body>
+</html>
