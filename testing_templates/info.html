@@ -41,10 +41,13 @@
 <td>dates</td>
 </tr>
 </th>
+{{range $key, $value := .Links.Dates_location}}
 <tr>
-    <td> date</td>
-    <td> location</td>
+    <td>{{$key}}</td>
+    <td>{{$value}}</td>
 </tr>
+{{end}}
+
     </table>
 </body>
 </html>
