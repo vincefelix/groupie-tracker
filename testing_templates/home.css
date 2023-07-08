@@ -35,3 +35,9 @@ p {
     background-color: rgb(58, 110, 93);
     text-align: center;
 }
+
+.card:hover {
+    filter: invert();
+    opacity: 80%;
+    scale: 120%;
+}
