@@ -6,6 +6,7 @@
 2. [Authors](#authors)
 3. [Usage:](#usage)
 4. [Implementation details: algorithm](#implementation-details-algorithm)
+5. [Testing](#testing)
 
 ### Description:
 ***
@@ -48,3 +49,10 @@ Our program define structs that helps to store datas from the API after retrievi
 + **func api_dates** Gets datas from API's dates part --> "https://groupietrackers.herokuapp.com/api/dates" .
 
 * **func api_relation** Gets datas from API's dates part --> "https://groupietrackers.herokuapp.com/api/dates" returns relations.
+
+## Testing :
+***
+```
+*** For the unit test file two file are used one that helps to test the API with using the Rest API extension and the other for our programme.
+
+- NB: For unit testing of the API the Rest Client extension must be installed on your PC.
