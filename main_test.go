@@ -1,6 +1,7 @@
 package main
 
 import (
+	Func "Func/Routes"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -17,7 +18,7 @@ func TestHomeHandler(t *testing.T) {
 	enregistre := httptest.NewRecorder()
 
 	// Appelle du handler de la route "/"
-	home(enregistre, requete)
+	Func.Home(enregistre, requete)
 
 	// Vérifier si les codes de statut correspondent
 	if status := enregistre.Code; status != http.StatusOK {
@@ -35,7 +36,7 @@ func TestArtistsHandler(t *testing.T) {
 	enregistre := httptest.NewRecorder()
 
 	// Appelle du handler de la route "/artists"
-	artists(enregistre, requete)
+	Func.Artists(enregistre, requete)
 
 	// Vérifier si les codes de statut correspondent
 	if status := enregistre.Code; status != http.StatusOK {
@@ -54,7 +55,7 @@ func TestInfoHandler(t *testing.T) {
 	enregistre := httptest.NewRecorder()
 
 	// Appelle du handler de la route "/info/{id}"
-	info(enregistre, requete)
+	Func.Info(enregistre, requete)
 
 	// Vérifier si les codes de statut correspondent
 	if status := enregistre.Code; status != http.StatusOK {
