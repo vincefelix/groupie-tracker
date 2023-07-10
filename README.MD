@@ -52,7 +52,6 @@ Our program define structs that helps to store datas from the API after retrievi
 
 ## Testing :
 ***
-```
-*** For the unit test file two file are used one that helps to test the API with using the Rest API extension and the other for our programme.
+For the unit test file two file are used one that helps to test the API with using the Rest API extension and the other for our programme.
 
 - NB: For unit testing of the API the Rest Client extension must be installed on your PC.
