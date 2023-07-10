@@ -1,0 +1,13 @@
+GET https://groupietrackers.herokuapp.com/api/artists
+
+###
+
+GET https://groupietrackers.herokuapp.com/api/locations
+
+###
+
+GET https://groupietrackers.herokuapp.com/api/dates
+
+###
+
+GET https://groupietrackers.herokuapp.com/api/artists/2
