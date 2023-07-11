@@ -15,22 +15,22 @@ func Home(w http.ResponseWriter, r *http.Request) {
 	//checking whether the route exists or not
 	if r.URL.Path != "/" && r.URL.Path != "/artists" && r.URL.Path != "/info/" {
 		w.WriteHeader(http.StatusNotFound)
-		error_file := template.Must(template.ParseFiles("testing_templates/error.html"))
+		error_file := template.Must(template.ParseFiles("templates/error.html"))
 		error_file.Execute(w, "404")
 		return
 	}
 
-	file, err := template.ParseFiles("testing_templates/index.html")
+	file, err := template.ParseFiles("templates/index.html")
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
-		error_file := template.Must(template.ParseFiles("testing_templates/error.html"))
+		error_file := template.Must(template.ParseFiles("templates/error.html"))
 		error_file.Execute(w, "500")
 		return
 	}
 
 	tab, error := fetch.Api_artists(w, r)
 	if !error {
-		error_file := template.Must(template.ParseFiles("testing_templates/error.html"))
+		error_file := template.Must(template.ParseFiles("templates/error.html"))
 		error_file.Execute(w, "500")
 		return
 	}
@@ -43,7 +43,7 @@ func Home(w http.ResponseWriter, r *http.Request) {
 		Top_artist: one,
 	})
 	if err != nil {
-		error_file := template.Must(template.ParseFiles("testing_templates/error.html"))
+		error_file := template.Must(template.ParseFiles("templates/error.html"))
 		error_file.Execute(w, "500")
 	}
 }
@@ -51,11 +51,11 @@ func Home(w http.ResponseWriter, r *http.Request) {
 // artists serves the route "/artists"
 func Artists(w http.ResponseWriter, r *http.Request) {
 	//parsing the artist page
-	file, err := template.ParseFiles("testing_templates/artist.html")
+	file, err := template.ParseFiles("templates/artist.html")
 	if err != nil {
 		//sending metadata about the error to the servor
 		w.WriteHeader(http.StatusInternalServerError)
-		error_file := template.Must(template.ParseFiles("testing_templates/error.html"))
+		error_file := template.Must(template.ParseFiles("templates/error.html"))
 		error_file.Execute(w, "500")
 		return
 	}
@@ -65,14 +65,14 @@ func Artists(w http.ResponseWriter, r *http.Request) {
 
 	//if an error occured while fetching datas
 	if !error {
-		error_file := template.Must(template.ParseFiles("testing_templates/error.html"))
+		error_file := template.Must(template.ParseFiles("templates/error.html"))
 		error_file.Execute(w, "500")
 		return
 	}
 
 	err = file.Execute(w, res)
 	if err != nil {
-		error_file := template.Must(template.ParseFiles("testing_templates/error.html"))
+		error_file := template.Must(template.ParseFiles("templates/error.html"))
 		error_file.Execute(w, "500")
 	}
 }
@@ -84,7 +84,7 @@ func Info(w http.ResponseWriter, r *http.Request) {
 	recup_id := path.Base(r.URL.Path)
 	if recup_id == "" {
 		w.WriteHeader(http.StatusNotFound)
-		error_file := template.Must(template.ParseFiles("testing_templates/error.html"))
+		error_file := template.Must(template.ParseFiles("templates/error.html"))
 		error_file.Execute(w, "404")
 		return
 	}
@@ -93,7 +93,7 @@ func Info(w http.ResponseWriter, r *http.Request) {
 	artists_data, error := fetch.Api_artists(w, r)
 	//if an error occured while fetching datas
 	if !error {
-		error_file := template.Must(template.ParseFiles("testing_templates/error.html"))
+		error_file := template.Must(template.ParseFiles("templates/error.html"))
 		error_file.Execute(w, "500")
 		return
 	}
@@ -102,7 +102,7 @@ func Info(w http.ResponseWriter, r *http.Request) {
 	id, err := strconv.Atoi(recup_id)
 	if err != nil || id == 0 || id > len(artists_data) {
 		w.WriteHeader(http.StatusNotFound)
-		error_file := template.Must(template.ParseFiles("testing_templates/error.html"))
+		error_file := template.Must(template.ParseFiles("templates/error.html"))
 		error_file.Execute(w, "404")
 		return
 	}
@@ -119,7 +119,7 @@ func Info(w http.ResponseWriter, r *http.Request) {
 	dates_data, error1 := fetch.Api_dates(w, r)
 	//if an error occured while fetching datas
 	if !error1 {
-		error_file := template.Must(template.ParseFiles("testing_templates/error.html"))
+		error_file := template.Must(template.ParseFiles("templates/error.html"))
 		error_file.Execute(w, "500")
 		return
 	}
@@ -141,7 +141,7 @@ func Info(w http.ResponseWriter, r *http.Request) {
 	locations_data, error2 := fetch.Api_locations(w, r)
 	//if an error occured while fetching datas
 	if !error2 {
-		error_file := template.Must(template.ParseFiles("testing_templates/error.html"))
+		error_file := template.Must(template.ParseFiles("templates/error.html"))
 		error_file.Execute(w, "500")
 		return
 	}
@@ -159,7 +159,7 @@ func Info(w http.ResponseWriter, r *http.Request) {
 
 	//if an error occured while fetching datas
 	if !error3 {
-		error_file := template.Must(template.ParseFiles("testing_templates/error.html"))
+		error_file := template.Must(template.ParseFiles("templates/error.html"))
 		error_file.Execute(w, "500")
 		return
 	}
@@ -172,11 +172,11 @@ func Info(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	for position := range relations_checked.Dates_location {
-		relations_checked.Dates_location[position] = strings.Split(strings.Join(relations_checked.Dates_location[position], "\n"), "\n")
+	// modifying the relation map
+	newmap := map[string] []string{}
+	for position, day:= range relations_checked.Dates_location {
 		splitted := strings.ReplaceAll(position, "-", "\n")
-		relations_checked.Dates_location[splitted] = relations_checked.Dates_location[position]
-		delete(relations_checked.Dates_location, position)
+		newmap[splitted] = day
 	}
 
 	previd := artists_checked.Id - 1
@@ -186,23 +186,23 @@ func Info(w http.ResponseWriter, r *http.Request) {
 		The_arts fetch.Artists
 		Days     fetch.Dates
 		Cities   fetch.Locations
-		Links    fetch.Relations
+		Links    map[string] []string
 		Prev     int
 		Next     int
 	}{
 		The_arts: artists_checked,
 		Days:     dates_checked,
 		Cities:   locations_checked,
-		Links:    relations_checked,
+		Links:    newmap,
 		Prev:     previd,
 		Next:     nextid,
 	}
 
-	file, errp := template.ParseFiles("testing_templates/info.html")
+	file, errp := template.ParseFiles("templates/info.html")
 	if errp != nil {
 		//sending metadata about the error to the servor
 		w.WriteHeader(http.StatusInternalServerError)
-		error_file := template.Must(template.ParseFiles("testing_templates/error.html"))
+		error_file := template.Must(template.ParseFiles("templates/error.html"))
 		error_file.Execute(w, "500")
 		return
 	}
@@ -210,7 +210,7 @@ func Info(w http.ResponseWriter, r *http.Request) {
 	err = file.Execute(w, todisplay)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
-		error_file := template.Must(template.ParseFiles("testing_templates/error.html"))
+		error_file := template.Must(template.ParseFiles("templates/error.html"))
 		error_file.Execute(w, "500")
 	}
 }

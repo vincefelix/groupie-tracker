@@ -1,0 +1,178 @@
+
+<!doctype html>
+<html class="no-js" lang="en" dir="ltr">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Groupie-Tracker</title>
+    <link rel="stylesheet" href="/static/css/foundation.css">
+    <link rel="stylesheet" href="/static/css/app.css">
+    <link rel="stylesheet" href="/static/style.css">
+  </head>
+
+<body>
+
+  <div class="covertandmenu">
+  <!-- responsive toggle bar -->
+  <div class="title-bar " data-responsive-toggle="responsive-menu" data-hide-for="medium">
+    <button class="menu-icon" type="button" data-toggle="responsive-menu"></button>
+    <div class="title-bar-title">Menu</div>
+  </div>
+  
+  <div class="top-bar menuhome" id="responsive-menu">
+    <div class="top-bar-left">
+      <ul class="dropdown menu vertical medium-horizontal" data-dropdown-menu>
+        <li class="menu-text" id="styletextmenu">Groupie-Tracker</li>
+        <li><a href="http://localhost:8080">Home</a></li>
+        <li> <a href="http://localhost:8080/artists">Artists</a> </li>
+        <!-- <li><a href="">Locations</a></li> -->
+        <li><a href="https://learn.zone01dakar.sn/git/mthiaw/groupie-tracker/src/branch/master/README.MD" target="_blank">ReadME</a></li>
+        <li><a href="https://learn.zone01dakar.sn/git/mthiaw/groupie-tracker/src/branch/master/README.MD#authors" target="_blank">About US</a></li>
+
+
+      </ul>
+    </div>
+    <!-- <div class="top-bar-right">
+      <ul class="menu">
+        <li><input type="search" placeholder="Search"></li>
+        <li><button type="button" class="button">Search</button></li>
+      </ul>
+    </div> -->
+  </div>
+  <hr />
+
+  <!-- image with text -->
+  <div class="slogan">
+    <!-- <img data-interchange="[assets/dj-crowd.jpg, small], [assets/dark-dj-set.jpg, medium], [assets/dj-crowd.jpg, large]" src="#" alt=""> -->
+    
+    <h3>
+      Are you a groupie?
+      Then we've got just what you need!
+      Rediscover the albums of your favorite artists and stay informed of their upcoming concerts!!! let's track them!
+    </h3>
+    <!-- fin slogan -->
+  </div>
+<!-- fin covertandmenu -->
+</div>
+<hr id="morespace"/>
+  
+  <!-- <hr /> -->
+  <!-- equalizer -->
+<div class="someslide">
+
+<div class="blackbande">
+  <h1>Top Artits</h1>
+  <a class="button primary seemore" href="http://localhost:8080/artists">See more</a>
+
+</div>
+  <hr />
+
+  <div class="grid-x grid-margin-x" data-equalizer data-equalize-on="medium" id="test-eq">
+    {{range .Top_artist}}
+    
+    <div class="cell small-12 medium-4 large-4 displayimage">
+      <div class="callout" data-equalizer-watch>
+        <a href="http://localhost:8080/info/{{.Id}}"> <img src= "{{.Image}}" alt="{{.Name}}">
+        <h5>{{.Name}}</h5></a>
+      </div>
+    </div>
+    {{end}}
+  </div>
+
+  <!-- deuxiéme -->
+  <hr>
+  <div class="blackbande">
+    <h1>Locations</h1>
+      <!-- <a class="button primary seemore" href="artist.html">See more</a> -->
+  </div>
+    <hr />
+  
+    <div class="grid-x grid-margin-x" data-equalizer data-equalize-on="medium" id="test-eq">
+      <div class="cell  large-3 ">
+        <div class="callout" id="undiv" data-equalizer-watch>
+          <h2>dunedin-new-zealand</h2>
+          <!-- <img class="locations" src= "assets/locations/dunedinnewzealand.jpeg"> -->
+        </div>
+      </div>
+      <div class="cell  large-3 ">
+        <div class="callout" id="deuxdiv" data-equalizer-watch>
+          <h2>georgia-usa</h2>
+          <!-- <img class="locations" src= "assets/locations/georgiausa.jpeg"> -->
+        </div>
+      </div>
+      <div class="cell  large-3 ">
+        <div class="callout" id="troisdiv" data-equalizer-watch>
+          <h2>los-angeles-usa</h2>
+          <!-- <img class="locations" src= "assets/locations/losangelesusa.jpeg"> -->
+        </div>
+      </div>
+      <div class="cell large-3 ">
+        <div class="callout" id="quatrediv" data-equalizer-watch>
+          <h2>nagoya-japan</h2>
+          <!-- <img class="locations" src= "assets/locations/nagoyajapan.jpeg"> -->
+        </div>
+    </div>
+    <div class="cell  large-4 ">
+      <div class="callout" id="cinqdiv" data-equalizer-watch>
+        <h2>north-carolina</h2>
+        <!-- <img class="locations" src= "assets/locations/northcarolina.jpeg"> -->
+      </div>
+    </div>
+    <div class="cell  large-4 ">
+      <div class="callout" id="sixdiv" data-equalizer-watch>
+        <h2>osaka-japan</h2>
+        <!-- <img class="locations" src= "assets/locations/osakajapan.jpeg"> -->
+      </div>
+    </div>
+    <div class="cell   large-4 ">
+      <div class="callout" id="septdiv" data-equalizer-watch>
+        <h2>penrose-new-zealand</h2>
+        <!-- <img class="locations" src= "assets/locations/penrosenewzealand.jpeg"> -->
+      </div>
+    </div>
+    <div class="cell  large-3 ">
+      <div class="callout" id="huigtdiv" data-equalizer-watch>
+        <h2>saitama-japan</h2>
+        <!-- <img class="locations" src= "assets/locations/saitamajapan.jpeg"> -->
+      </div>
+    </div>
+    <div class="cell  large-3 ">
+      <div class="callout" id="neufdiv" data-equalizer-watch>
+        <h2>playa-del-carmen-mexico</h2>
+        <!-- <img class="locations" src= "assets/locations/playadelcarmenmexico.jpeg"> -->
+      </div>
+    </div>
+    <div class="cell  large-3 ">
+      <div class="callout" id="dixdiv" data-equalizer-watch>
+        <h2>papeete-french-polynesia</h2>
+        <!-- <img class="locations" src= "assets/locations/papeetefrenchpolynesia.jpeg"> -->
+      </div>
+    </div>
+    <div class="cell  large-3 ">
+      <div class="callout" id="onzediv" data-equalizer-watch>
+        <h2>noumea-new-caledonia</h2>
+        <!-- <img class="locations" src= "assets/locations/noumeanewcaledonia.jpeg"> -->
+      </div>
+    </div>
+<!-- fin some slide -->
+</div>
+  <!-- fin equalizer -->
+  <hr />
+ 
+
+
+<footer>
+  <div  class="footer">
+    <p>&copy; 2023 MVS</p>
+  </div>
+</footer> 
+ 
+
+    <script src="/static/js/vendor/jquery.js"></script>
+    <script src="/static/js/vendor/what-input.js"></script>
+    <script src="/static/js/vendor/foundation.js"></script>
+    <script src="/static/js/app.js"></script>
+  </body>
+</html>

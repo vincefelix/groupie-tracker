@@ -10,7 +10,7 @@ import (
 // handlers regroups all the routes supported by our servor.
 // handlers launches it too.
 func Handlers() {
-	fs := http.FileServer(http.Dir("testing_templates"))
+	fs := http.FileServer(http.Dir("templates"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 	http.HandleFunc("/", Rt.Home)
 	http.HandleFunc("/artists", Rt.Artists)

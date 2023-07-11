@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Groupie-Tracker</title>
+    <link rel="stylesheet" href="/static/css/foundation.css" />
+    <link rel="stylesheet" href="/static/css/app.css" />
+    <link rel="stylesheet" href="/static/style.css" />
+    <link rel="stylesheet" href="/static/styleartist.css" />
+  </head>
+  <body>
+    <!-- menu -->
+    <div class="menuartist">
+      <!-- responsive toggle bar -->
+      <div
+        class="title-bar"
+        data-responsive-toggle="responsive-menu"
+        data-hide-for="medium"
+      >
+        <button
+          class="menu-icon"
+          type="button"
+          data-toggle="responsive-menu"
+        ></button>
+        <div class="title-bar-title">Menu</div>
+      </div>
+
+      <div class="top-bar" id="responsive-menu">
+        <div class="top-bar-left">
+          <ul
+            class="dropdown menu vertical medium-horizontal"
+            data-dropdown-menu
+          >
+            <li class="menu-text" id="styletextmenu">Groupie-Tracker</li>
+            <li><a href="http://localhost:8080">Home</a></li>
+            <li><a href="http://localhost:8080/artists">Artists</a></li>
+            <li><a href="https://learn.zone01dakar.sn/git/mthiaw/groupie-tracker/src/branch/master/README.MD" target="_blank">ReadME</a></li>
+            <li><a href="https://learn.zone01dakar.sn/git/mthiaw/groupie-tracker/src/branch/master/README.MD#authors" target="_blank">About US</a></li>
+
+          </ul>
+        </div>
+      </div>
+    </div>
+    <hr />
+
+    <!-- image de l'artiste avec du texte -->
+
+    <div class="container">
+
+      <img src="{{.The_arts.Image}}" alt="{{.The_arts.Name}}">
+      <div class="overlay">
+        <h2>{{.The_arts.Name}}</h2>
+
+      </div>
+    </div>
+    <hr \>
+
+    <!-- afficher les membres, dates , albums -->
+
+
+  </div>
+  <div class="blackbande">
+    <h1>{{.The_arts.Name}} (since... {{.The_arts.Creation_date}} )</h1>
+    <!--     -->
+  </div>
+  <hr \>
+
+  <!-- info -->
+<div class="infos">
+  <div class="sameborder">
+    <h4>First Album</h4>
+    <ul>
+      <li>{{.The_arts.First_album}}</li>
+    </ul>
+  </div>
+<!-- <vr /> -->
+<hr \>
+  <div class="sameborder">
+    <h4>Members</h4>
+    <ul>
+      {{range .The_arts.Member}}
+        <li>{{.}}</li>
+        {{end}}
+    </ul>
+  </div>
+<!-- <vr /> -->
+<hr \>
+
+<div class="sameborder">
+  <h4>key dates </h4>
+  <ul>
+    {{range .Days.Date}}
+        <li>{{.}}</li>
+        {{end}}
+  </ul>
+</div>
+<hr \>
+
+<div class="sameborder">
+  <h4>Locations</h4>
+  <ul>
+    {{range .Cities.Location}}
+        <li>{{.}}</li>
+        {{end}}
+  </ul>
+</div>
+
+<hr \>
+<div class="sameborder">
+  <h4>Relations</h4>
+      <table class="fortable">
+        <thead>
+          <tr>
+            <!-- <th width="200">Table Header</th> -->
+            <!-- <th>Table Header</th> -->
+            <th width="150">Locations</th>
+            <th width="150">Dates</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{range $key, $value := .Links}}
+          <tr>
+            
+            <td><pre>{{$key}}</pre></td>
+            <td id="forspace">
+              {{range $value}}
+               <div>{{.}}</div> 
+              {{end}}
+          </td>
+          </tr>
+          {{end}}
+        </tbody>
+      </table>
+    </div>
+    
+  <!-- </div> -->
+  <hr \>
+
+  <!-- bouton next and preview -->
+  <div class="blackbande">
+ {{if ne .The_arts.Id 1}}
+    <a class="button primary seemore prev" href="http://localhost:8080/info/{{.Prev}}">o--Preview</a>
+    {{end}}
+    {{if ne .The_arts.Id 52}}
+    <a class="button primary seemore next" href="http://localhost:8080/info/{{.Next}}">Next --o</a> 
+    {{end}}
+  
+   </div>
+    <hr />  
+</div> 
+
+    <footer>
+      <div  class="footer">
+        <p>&copy; 2023 VMS</p>
+      </div>
+
+    </footer>
+
+
+
+    <script src="/static/js/vendor/jquery.js"></script>
+    <script src="/static/js/vendor/what-input.js"></script>
+    <script src="/static/js/vendor/foundation.js"></script>
+    <script src="/static/js/app.js"></script>
+  </body>
+</html>
