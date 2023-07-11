@@ -10,6 +10,21 @@ margin: 0 30%;
 
 }
 
+nav {
+    display: flex;
+    justify-content: space-between;
+    background-color: black
+}
+
+#search {
+    margin-right: 0%;
+    margin-left: 50%;
+}
+
+.move {
+    
+}
+
 h1 {
 
     color: antiquewhite;

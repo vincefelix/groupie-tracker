@@ -3,13 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/style.css">
     <title>groupie</title>
 </head>
 <body>
     <nav><a href="http://localhost:8080">home</a></nav>
     <hr>
     <hr>
-<div><img src="{{.The_arts.Image}}" alt="zrt"></div>
+    <main>
+        {{if ne .The_arts.Id 1}}
+     <a href="http://localhost:8080/info/{{.Prev}}"><div class="move prev">prev</div></a>
+       {{end}}
+       
+       {{if ne .The_arts.Id 52}}
+      <a href="http://localhost:8080/info/{{.Next}}"><div class="move next">next</div></a>
+     {{end}}
+
+     <div><img src="{{.The_arts.Image}}" alt="zrt"></div>
      <h1>Id: <i>{{.The_arts.Id}}</i></h1>
     <h1>Name: {{.The_arts.Name}}</h1>
     <h1><strong>Members:</strong></h1>
@@ -43,11 +53,18 @@
 </th>
 {{range $key, $value := .Links.Dates_location}}
 <tr>
-    <td>{{$key}}</td>
-    <td>{{$value}}</td>
+    <td>
+        <pre>{{$key}}</pre>
+    </td>
+    <td>
+        {{range $value}}
+        <pre>{{.}}</pre>
+        {{end}}
+    </td>
 </tr>
 {{end}}
 
     </table>
+</main>
 </body>
 </html>

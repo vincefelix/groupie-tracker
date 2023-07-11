@@ -7,5 +7,10 @@
 </head>
 <body>
     <h1>erreur {{.}}</h1>
+    {{if eq . "500"}}
+    <p>Internal servor error</p>
+    {{else if  eq . "404"}}
+    <p>Page not found</p>
+    {{end}}
 </body>
 </html>

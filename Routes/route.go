@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"path"
 	"strconv"
+	"strings"
 )
 
 // home serves the route "/"
@@ -131,6 +132,11 @@ func Info(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
+	//Removing the "*" in front of dates
+	for i := range dates_checked.Date {
+		dates_checked.Date[i] = strings.ReplaceAll(dates_checked.Date[i], "*", "")
+	}
+
 	//storing the api locations datas
 	locations_data, error2 := fetch.Api_locations(w, r)
 	//if an error occured while fetching datas
@@ -166,17 +172,30 @@ func Info(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
+	for position := range relations_checked.Dates_location {
+		relations_checked.Dates_location[position] = strings.Split(strings.Join(relations_checked.Dates_location[position], "\n"), "\n")
+		splitted := strings.ReplaceAll(position, "-", "\n")
+		relations_checked.Dates_location[splitted] = relations_checked.Dates_location[position]
+		delete(relations_checked.Dates_location, position)
+	}
+
+	previd := artists_checked.Id - 1
+	nextid := artists_checked.Id + 1
 	//struct to excecute
 	todisplay := struct {
 		The_arts fetch.Artists
 		Days     fetch.Dates
 		Cities   fetch.Locations
 		Links    fetch.Relations
+		Prev     int
+		Next     int
 	}{
 		The_arts: artists_checked,
 		Days:     dates_checked,
 		Cities:   locations_checked,
 		Links:    relations_checked,
+		Prev:     previd,
+		Next:     nextid,
 	}
 
 	file, errp := template.ParseFiles("testing_templates/info.html")
@@ -190,6 +209,7 @@ func Info(w http.ResponseWriter, r *http.Request) {
 
 	err = file.Execute(w, todisplay)
 	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
 		error_file := template.Must(template.ParseFiles("testing_templates/error.html"))
 		error_file.Execute(w, "500")
 	}
