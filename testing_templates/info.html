@@ -1,70 +1,167 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/style.css">
-    <title>groupie</title>
-</head>
-<body>
-    <nav><a href="http://localhost:8080">home</a></nav>
-    <hr>
-    <hr>
-    <main>
-        {{if ne .The_arts.Id 1}}
-     <a href="http://localhost:8080/info/{{.Prev}}"><div class="move prev">prev</div></a>
-       {{end}}
-       
-       {{if ne .The_arts.Id 52}}
-      <a href="http://localhost:8080/info/{{.Next}}"><div class="move next">next</div></a>
-     {{end}}
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Groupie-Tracker</title>
+    <link rel="stylesheet" href="/static/css/foundation.css" />
+    <link rel="stylesheet" href="/static/css/app.css" />
+    <link rel="stylesheet" href="/static/style.css" />
+    <link rel="stylesheet" href="/static/styleartist.css" />
+  </head>
+  <body>
+    <!-- menu -->
+    <div class="menuartist">
+      <!-- responsive toggle bar -->
+      <div
+        class="title-bar"
+        data-responsive-toggle="responsive-menu"
+        data-hide-for="medium"
+      >
+        <button
+          class="menu-icon"
+          type="button"
+          data-toggle="responsive-menu"
+        ></button>
+        <div class="title-bar-title">Menu</div>
+      </div>
 
-     <div><img src="{{.The_arts.Image}}" alt="zrt"></div>
-     <h1>Id: <i>{{.The_arts.Id}}</i></h1>
-    <h1>Name: {{.The_arts.Name}}</h1>
-    <h1><strong>Members:</strong></h1>
-    <ol>
-        {{range .The_arts.Member}}
-        <li>{{.}}</li>
-        {{end}}
-    </ol>
-    <h1><strong>Creation date: {{.The_arts.Creation_date}}</strong></h1>
-    <h1><strong>First album: {{.The_arts.First_album}}</strong></h1>
-    <h1><strong>Location:</strong></h1>
+      <div class="top-bar" id="responsive-menu">
+        <div class="top-bar-left">
+          <ul
+            class="dropdown menu vertical medium-horizontal"
+            data-dropdown-menu
+          >
+            <li class="menu-text" id="styletextmenu">Groupie-Tracker</li>
+            <li><a href="http://localhost:8080">Home</a></li>
+            <li><a href="http://localhost:8080/artists">Artists</a></li>
+            <li><a href="https://learn.zone01dakar.sn/git/mthiaw/groupie-tracker/src/branch/master/README.MD" target="_blank">ReadME</a></li>
+            <li><a href="https://learn.zone01dakar.sn/git/mthiaw/groupie-tracker/src/branch/master/README.MD#authors" target="_blank">About US</a></li>
+
+          </ul>
+        </div>
+      </div>
+    </div>
+    <hr />
+
+    <!-- image de l'artiste avec du texte -->
+
+    <div class="container">
+
+      <img src="{{.The_arts.Image}}" alt="{{.The_arts.Name}}">
+      <div class="overlay">
+        <h2>{{.The_arts.Name}}</h2>
+
+      </div>
+    </div>
+    <hr \>
+
+    <!-- afficher les membres, dates , albums -->
+
+
+  </div>
+  <div class="blackbande">
+    <h1>{{.The_arts.Name}} (since... {{.The_arts.Creation_date}} )</h1>
+    <!--     -->
+  </div>
+  <hr \>
+
+  <!-- info -->
+<div class="infos">
+  <div class="sameborder">
+    <h4>First Album</h4>
     <ul>
-        {{range .Cities.Location}}
+      <li>{{.The_arts.First_album}}</li>
+    </ul>
+  </div>
+<!-- <vr /> -->
+<hr \>
+  <div class="sameborder">
+    <h4>Members</h4>
+    <ul>
+      {{range .The_arts.Member}}
         <li>{{.}}</li>
         {{end}}
     </ul>
-    <h1><strong>dates:</strong></h1>
-    <ol>
-        {{range .Days.Date}}
+  </div>
+<!-- <vr /> -->
+<hr \>
+
+<div class="sameborder">
+  <h4>key dates </h4>
+  <ul>
+    {{range .Days.Date}}
         <li>{{.}}</li>
         {{end}}
-    </ol>
+  </ul>
+</div>
+<hr \>
 
-    <h1><strong>Relations:</strong></h1>
-    <table>
-<th>
-    <tr>
-<td>locations</td>
-<td>dates</td>
-</tr>
-</th>
-{{range $key, $value := .Links.Dates_location}}
-<tr>
-    <td>
-        <pre>{{$key}}</pre>
-    </td>
-    <td>
-        {{range $value}}
-        <pre>{{.}}</pre>
+<div class="sameborder">
+  <h4>Locations</h4>
+  <ul>
+    {{range .Cities.Location}}
+        <li>{{.}}</li>
         {{end}}
-    </td>
-</tr>
-{{end}}
+  </ul>
+</div>
 
-    </table>
-</main>
-</body>
+<hr \>
+<div class="sameborder">
+  <h4>Relations</h4>
+      <table class="fortable">
+        <thead>
+          <tr>
+            <!-- <th width="200">Table Header</th> -->
+            <!-- <th>Table Header</th> -->
+            <th width="150">Locations</th>
+            <th width="150">Dates</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{range $key, $value := .Links.Dates_location}}
+          <tr>
+            
+            <td>{{$key}}</td>
+            <td id="forspace">
+              {{range $value}}
+               <div>{{.}}</div> 
+              {{end}}
+          </td>
+          </tr>
+          {{end}}
+        </tbody>
+      </table>
+    </div>
+    
+  <!-- </div> -->
+  <hr \>
+
+  <!-- bouton next and preview -->
+  <div class="blackbande">
+ {{if ne .The_arts.Id 1}}
+    <a class="button primary seemore" href="http://localhost:8080/info/{{.Prev}}">Preview</a>
+    {{end}}
+    {{if ne .The_arts.Id 52}}
+    <a class="button primary seemore" href="http://localhost:8080/info/{{.Next}}">Next</a> 
+    {{end}}
+  
+   </div>
+    <hr />  
+
+    <footer>
+      <div  class="footer">
+        <p>&copy; 2023 MVS</p>
+      </div>
+
+    </footer>
+
+
+
+    <script src="/static/js/vendor/jquery.js"></script>
+    <script src="/static/js/vendor/what-input.js"></script>
+    <script src="/static/js/vendor/foundation.js"></script>
+    <script src="/static/js/app.js"></script>
+  </body>
 </html>
