@@ -154,6 +154,13 @@ func Info(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
+	//modifying the locations
+	for i := range locations_checked.Location {
+      locations_checked.Location[i] = strings.Title(locations_checked.Location[i])
+      locations_checked.Location[i] = strings.ReplaceAll(locations_checked.Location[i], "_", " ")
+      locations_checked.Location[i] = strings.ReplaceAll(locations_checked.Location[i], "-", "    - - >    ")
+	}
+
 	//storing the api relations datas
 	relations_data, error3 := fetch.Api_relation(w, r)
 
@@ -176,6 +183,7 @@ func Info(w http.ResponseWriter, r *http.Request) {
 	newmap := map[string] []string{}
 	for position, day:= range relations_checked.Dates_location {
 		splitted := strings.ReplaceAll(position, "-", "\n")
+		splitted =strings.ReplaceAll(splitted, "_", " ")
 		newmap[splitted] = day
 	}
 
