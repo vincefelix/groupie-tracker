@@ -61,19 +61,19 @@ func get_link(w http.ResponseWriter, r *http.Request) (string, string, string, s
 	//fetching datas from the api
 	data, err := http.Get("https://groupietrackers.herokuapp.com/api")
 	if err != nil {
-		http.Error(w, "error while fetching data", http.StatusInternalServerError)
+		return "", "", "", ""
 	} else {
 		//reading the collected datas
 		content, ex := io.ReadAll(data.Body)
 		if ex != nil {
-			http.Error(w, "error while reading the content", http.StatusInternalServerError)
+			return "", "", "", ""
 		} else {
 
 			//converting the json file and storing the datas
 			var info Band
 			err = json.Unmarshal(content, &info)
 			if err != nil {
-				http.Error(w, "error while reading the content", http.StatusInternalServerError)
+				return "", "", "", ""
 			} else {
 				artist_link, dates_link, location_link, relation_link = info.Art, info.Dat, info.Loc, info.Rel // getting the links
 			}
@@ -90,11 +90,14 @@ func Api_artists(w http.ResponseWriter, r *http.Request) ([]Artists, bool) {
 	var affiche_err = true
 	// Getting the link heading to datas
 	link_artist, _, _, _ := get_link(w, r)
+	if link_artist == "" {
+		affiche_err = false
+		return nil, affiche_err
+	}
 
 	// Fetching datas
 	data, err := http.Get(link_artist)
 	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
 		affiche_err = false
 		return nil, affiche_err
 	}
@@ -102,7 +105,6 @@ func Api_artists(w http.ResponseWriter, r *http.Request) ([]Artists, bool) {
 	// Reading the collected datas
 	content, err := io.ReadAll(data.Body)
 	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
 		affiche_err = false
 		return nil, affiche_err
 	}
@@ -111,7 +113,6 @@ func Api_artists(w http.ResponseWriter, r *http.Request) ([]Artists, bool) {
 	var artist []Artists
 	err = json.Unmarshal(content, &artist)
 	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
 		affiche_err = false
 		return nil, affiche_err
 	}
@@ -126,11 +127,14 @@ func Api_dates(w http.ResponseWriter, r *http.Request) (date, bool) {
 	affiche_err := true
 	//getting the link heading to datas
 	_, link_date, _, _ := get_link(w, r)
+	if link_date == "" {
+		affiche_err = false
+		return date{}, affiche_err
+	}
 
 	//fetching datas
 	data, err := http.Get(link_date)
 	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
 		affiche_err = false
 		return date{}, affiche_err
 	}
@@ -138,7 +142,6 @@ func Api_dates(w http.ResponseWriter, r *http.Request) (date, bool) {
 	//reading the collected datas
 	content, ex := io.ReadAll(data.Body)
 	if ex != nil {
-		w.WriteHeader(http.StatusInternalServerError)
 		affiche_err = false
 		return date{}, affiche_err
 	}
@@ -147,7 +150,6 @@ func Api_dates(w http.ResponseWriter, r *http.Request) (date, bool) {
 	var thedate date
 	err = json.Unmarshal(content, &thedate)
 	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
 		affiche_err = false
 		return date{}, affiche_err
 	}
@@ -163,6 +165,10 @@ func Api_locations(w http.ResponseWriter, r *http.Request) (locations, bool) {
 	affiche_err := true
 	//getting the link heading to datas
 	_, _, link_location, _ := get_link(w, r)
+	if link_location == "" {
+		affiche_err = false
+		return locations{}, affiche_err
+	}
 
 	//fetching datas
 	data, err := http.Get(link_location)
@@ -199,11 +205,14 @@ func Api_relation(w http.ResponseWriter, r *http.Request) (relations, bool) {
 	affiche_err := true
 	//getting the link heading to datas
 	_, _, _, link_relation := get_link(w, r)
+	if link_relation == "" {
+		affiche_err = false
+		return relations{}, affiche_err
+	}
 
 	//fetching datas
 	data, err := http.Get(link_relation)
 	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
 		affiche_err = false
 		return relations{}, affiche_err
 	}
@@ -211,7 +220,6 @@ func Api_relation(w http.ResponseWriter, r *http.Request) (relations, bool) {
 	//reading the collected datas
 	content, ex := io.ReadAll(data.Body)
 	if ex != nil {
-		w.WriteHeader(http.StatusInternalServerError)
 		affiche_err = false
 		return relations{}, affiche_err
 	}
@@ -219,7 +227,6 @@ func Api_relation(w http.ResponseWriter, r *http.Request) (relations, bool) {
 	var linked relations
 	err = json.Unmarshal(content, &linked)
 	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
 		affiche_err = false
 		return relations{}, affiche_err
 	}
