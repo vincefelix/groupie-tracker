@@ -22,9 +22,9 @@ This project's server (back-end) is written using GO and the web documents (fron
 
 ### Authors:
 ***
-- Vincent Félix Ndour (Writer and test-file) -README/TEST_FILE- https://learn.zone01dakar.sn/git/vindour
 * Masseck Thiaw (the genius and our captain) -BACKEND- https://learn.zone01dakar.sn/git/mthiaw
 + Seynabou Niang (The artist Michel-Ange) -FRONTEND- https://learn.zone01dakar.sn/git/sniang
+- Vincent Félix Ndour (Writer and test-file) -README/TEST_FILE- https://learn.zone01dakar.sn/git/vindour
 
 ### Usage:
 ***
