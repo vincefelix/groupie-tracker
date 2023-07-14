@@ -100,9 +100,15 @@ func Info(w http.ResponseWriter, r *http.Request) {
 		error_file.Execute(w, "405")
 		return
 	}
-
-	//retrieving the id from the url
 	recup_id := path.Base(r.URL.Path)
+	if r.URL.Path != "/info/"+recup_id {
+		w.WriteHeader(http.StatusNotFound)
+		error_file := template.Must(template.ParseFiles("templates/error.html"))
+		error_file.Execute(w, "404")
+		return
+	}
+	//retrieving the id from the url
+
 	if recup_id == "" {
 		w.WriteHeader(http.StatusNotFound)
 		error_file := template.Must(template.ParseFiles("templates/error.html"))
@@ -121,7 +127,7 @@ func Info(w http.ResponseWriter, r *http.Request) {
 
 	//converting the id into int and setting a limit
 	id, err := strconv.Atoi(recup_id)
-	if err != nil || id == 0 || id > len(artists_data) {
+	if err != nil || id <= 0 || id > len(artists_data) {
 		w.WriteHeader(http.StatusNotFound)
 		error_file := template.Must(template.ParseFiles("templates/error.html"))
 		error_file.Execute(w, "404")
